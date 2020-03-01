@@ -50,7 +50,7 @@ For none Archlinux hosts the makefile provides a bootstrap method which creates 
 
 ## Required packages
 
-docker
-arch-install-scripts
-base-devel
-devtools
+ - docker
+ - arch-install-scripts
+ - base-devel
+ - devtools
