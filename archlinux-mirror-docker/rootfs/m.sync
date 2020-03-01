@@ -1,0 +1,31 @@
+#!/bin/bash -ex
+
+SYNC_BWIDTH=2048
+SYNC_SERVER=de3.mirror.archlinuxarm.org::archlinux-arm
+SYNC_HOME="/var/lib/mirror"
+SYNC_DIR="$(date +%Y/%m/%d)"
+SYNC_FILES="$SYNC_HOME/${SYNC_DIR}"
+SYNC_FILES_LATEST="$SYNC_HOME/latest"
+
+mkdir -p $SYNC_FILES
+
+if [ -e "${SYNC_FILES_LATEST}" ] && [ "$(realpath ${SYNC_FILES_LATEST})" != "${SYNC_FILES}" ];
+then
+    cp -rl ${SYNC_FILES_LATEST}/* $SYNC_FILES
+    rm ${SYNC_FILES_LATEST}
+    ln -s ${SYNC_DIR} ${SYNC_FILES_LATEST}
+fi
+
+function mirror() {
+rsync -rptlv \
+      --bwlimit=$SYNC_BWIDTH \
+      --delete-after \
+      --safe-links \
+      --max-delete=1000 \
+      --copy-links \
+      --delay-updates $@ "$SYNC_FILES"
+}
+
+mirror $SYNC_SERVER/aarch64 
+mirror $SYNC_SERVER/armv7h
+mirror --exclude='os/*/*' $SYNC_SERVER/os

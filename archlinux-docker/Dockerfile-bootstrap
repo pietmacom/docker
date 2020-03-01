@@ -1,0 +1,20 @@
+FROM alpine
+
+RUN apk add docker-cli make arch-install-scripts tar
+
+COPY . /work
+WORKDIR /work
+
+# Prepare Pacman for Keyring installation
+RUN mkdir /etc/pacman.d && \
+    cp /work/build/etc/pacman.d/mirrorlist /etc/pacman.d/ && \
+    sed "s|^SigLevel.*|SigLevel = Never|" ./build/etc/pacman.conf > /etc/pacman.conf && \
+    pacman -r / --noconfirm -Sy archlinux$(uname -m | grep -E 'arm|aarch'>/dev/null && echo -n "arm")-keyring pacman-mirrorlist && \
+    pacman-key --init && \
+    pacman-key --populate archlinux$(uname -m | grep -E 'arm|aarch'>/dev/null && echo -n "arm")
+
+# Set Baseline
+RUN rm -rf /work/rootfs && \
+    mv /work/build /work/rootfs
+
+ENTRYPOINT ["make", "docker-image"]
