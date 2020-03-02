@@ -19,7 +19,7 @@ echo -n "Password: "
 read -s PASSWORD
 
 echo
-echo -n "Working Drive (like /dev/sda) : "
+echo -n "Working Drive (like /dev/sda): "
 read WORKDRIVE
 
 
