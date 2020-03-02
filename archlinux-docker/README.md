@@ -6,7 +6,7 @@ So far its testet on
 
  - armv6
  - armv7
- - aarch
+ - aarch64
  - x86_64
 
 So the archlinux makes sense, some things are copied from the host system
