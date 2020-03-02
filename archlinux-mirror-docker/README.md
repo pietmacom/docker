@@ -8,4 +8,4 @@ Please build archlinux-docker first.
 
     mkdir -p /var/lib/mirror
     chmod uog+rwx /var/lib/mirror
-    docker run -d --rm --volume /var/lib/mirror:/var/lib/mirror:rw armv7l/archlinux-mirror
+    docker run -d --rm --volume /var/lib/mirror:/var/lib/mirror:rw $(uname -m)/archlinux-mirror
