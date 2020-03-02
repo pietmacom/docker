@@ -3,6 +3,7 @@
 Base build environment which handles copying of sources and build artifaktes. It comes with with installed sudo and its own build user who's allowed to do sudo passwordless.
  
  $ make docker-image
+ 
  $ run.sh makepkg -Si && cp *.pkg.tar.gz /build-target
 
 
@@ -11,6 +12,7 @@ Additional packages can be installed by modifying the package file in the root o
 Build for certain packagestates are possible
 
  $ make docker-image VERSION=20200101
+ 
  $ VERSION=20200101 run.sh makepkg -Si && cp *.pkg.tar.gz /build-target
 
 # Environment
