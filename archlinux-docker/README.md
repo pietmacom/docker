@@ -35,7 +35,7 @@ For specific mirrors
 
  - MIRROR_ARMV6
  - MIRROR_ARMV7
- - MIRROR_AARCH
+ - MIRROR_AARCH64
  - MIRROR_X86_64
 
  $ make docker-image MIRROR='http://XYZ/VERSIONPATH/\$$arch/\$$repo' MIRROR_AARCH64='http://XYZ/VERSIONPATH/\$$arch/\$$repo' VERSION='20200101'
