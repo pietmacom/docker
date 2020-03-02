@@ -11,7 +11,7 @@ RUN sh -c 'ls usr/lib/sysusers.d/*.conf | /usr/share/libalpm/scripts/systemd-hoo
 # initialize the archilnux keyring, but discard any private key that may be shipped.
 RUN pacman-key --init && \
     pacman-key --populate archlinux$(uname -m | grep -E 'arm|aarch'>/dev/null && echo -n "arm") && \
-    rm -rf /etc/pacman.d/gnupg/{openpgp-revocs.d/,private-keys-v1.d/,pugring.gpg~,gnupg.S.}* && \
+    rm -rf /etc/pacman.d/gnupg/{openpgp-revocs.d/,private-keys-v1.d/,pugring.gpg~,gnupg.S.}*
 
 
 CMD ["/usr/bin/bash"]
