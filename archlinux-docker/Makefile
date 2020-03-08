@@ -44,8 +44,9 @@ prepare:
 	cp -f /etc/localtime $(PWD)/$(BUILDDIR)/etc/localtime || true
 
 	# http://tardis.tiny-vps.com/aarm/repos/2018/03/31/$arch/$repo
+	# Signatures can't be validated without chaning the date and time from the clock
 	if [ "$(VERSION)" != "latest" ]; then \
-	    sed -i "s|^Include.*|Server = $(MIRRORURL)|" $(PWD)/$(BUILDDIR)/etc/pacman.conf; \
+	    sed -i "s|^Include.*|Server = $(MIRRORURL)\nSigLevel = Optional TrustAll|" $(PWD)/$(BUILDDIR)/etc/pacman.conf; \
 	fi
 
 docker-image-bootstraped: prepare
@@ -67,8 +68,10 @@ rootfs: prepare
 	find /usr/share/libalpm/hooks -exec ln -s /dev/null $(PWD)/alpm-hooks{} \;
 
 	mkdir -vp $(TMPDIR)/var/lib/pacman/	
+	mkdir -vp $(TMPDIR)/var/cache/pacman/pkg/	
 	fakechroot -- fakeroot -- pacman -Sy -r $(TMPDIR) \
 		--noconfirm --dbpath $(PWD)/$(TMPDIR)/var/lib/pacman \
+		--cachedir $(PWD)/$(TMPDIR)/var/cache/pacman/pkg \
 		--config $(BUILDDIR)/etc/pacman.conf \
 		--noscriptlet \
 		--hookdir $(PWD)/alpm-hooks/usr/share/libalpm/hooks/ \
