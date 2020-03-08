@@ -11,7 +11,7 @@ then
 fi
 
 docker run \
-	-it \
+	-t \
 	-v $(pwd):/src:rw \
 	$TAG \
 	"$@"

@@ -46,7 +46,7 @@ prepare:
 	# http://tardis.tiny-vps.com/aarm/repos/2018/03/31/$arch/$repo
 	# Signatures can't be validated without chaning the date and time from the clock
 	if [ "$(VERSION)" != "latest" ]; then \
-	    sed -i "s|^Include.*|Server = $(MIRRORURL)\nSigLevel = Optional TrustAll|" $(PWD)/$(BUILDDIR)/etc/pacman.conf; \
+	    sed -i "s|^Include.*|Server = $(MIRRORURL)\nSigLevel = Never|" $(PWD)/$(BUILDDIR)/etc/pacman.conf; \
 	fi
 
 docker-image-bootstraped: prepare
