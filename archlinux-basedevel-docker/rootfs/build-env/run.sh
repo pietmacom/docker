@@ -1,5 +1,9 @@
 #!/bin/sh -ex
 
+# Prepare System
+sed -i "s|COMPRESSXZ.*|COMPRESSXZ=(xz -c -z - --threads=$(nproc))|" /etc/makepkg.conf
+sed -i "s|#\s*MAKEFLAGS.*|MAKEFLAGS=\"-j$(nproc)\"|" /etc/makepkg.conf
+
 cp -R /src/* /build/
 chown -R build:build /build
 
