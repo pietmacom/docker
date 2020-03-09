@@ -17,4 +17,5 @@ EXITCODE=$?
 chown -R --reference=/src/. /build-target/*
 cp -Rf --preserve=mode,ownership,timestamps /build-target/* /src/
 
+# Forward exitcode
 exit $EXITCODE
