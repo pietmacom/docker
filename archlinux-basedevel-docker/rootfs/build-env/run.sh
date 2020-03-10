@@ -4,13 +4,17 @@
 sed -i "s|COMPRESSXZ.*|COMPRESSXZ=(xz -c -z - --threads=$(nproc))|" /etc/makepkg.conf
 sed -i "s|#\s*MAKEFLAGS.*|MAKEFLAGS=\"-j$(nproc)\"|" /etc/makepkg.conf
 
+# Make stdout accessable to scripts
+chmod gou+rw /dev/pts/*
+
+
 cp -R /src/* /build/
 chown -R build:build /build
 
 cd /build
 
 # Don't fail the rest of this script
-(su - build -s /bin/sh -c "$( IFS=$' '; echo "$@" )")
+(su - build -s /bin/sh -c "$( IFS=$' '; echo "$@" )" || true)
 EXITCODE=$?
 
 
