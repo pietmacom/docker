@@ -75,7 +75,8 @@ rootfs: prepare
 		--config $(BUILDDIR)/etc/pacman.conf \
 		--noscriptlet \
 		--hookdir $(PWD)/alpm-hooks/usr/share/libalpm/hooks/ \
-		 archlinux$(shell uname -m | grep -E 'arm|aarch'>/dev/null && echo -n "arm")-keyring base grep $(shell cat packages)
+		 archlinux$(shell uname -m | grep -E 'arm|aarch'>/dev/null && echo -n "arm")-keyring pacman base
+	rm -rf $(TMPDIR)/var/cache/pacman/pkg/*
 	rm -rf alpm-hooks 
 	
 	cp --recursive --preserve=timestamps --force $(BUILDDIR)/* $(TMPDIR)/
@@ -89,7 +90,7 @@ rootfs: prepare
 	rm -rf $(TMPDIR)
 
 docker-image: rootfs
-	docker build -t $(TAG) .
+	docker build --build-arg PACKAGES="grep $(shell cat packages)" -t $(TAG) .
 	if [ "$(VERSION)" = "latest" ]; then \
 		docker tag $(TAG) $(TAG):r$$(date +%Y%m%d); \
 	fi
