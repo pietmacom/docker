@@ -13,6 +13,6 @@ RUN ldconfig && \
     pacman-key --init && \
     pacman-key --populate archlinux$(uname -m | grep -E 'arm|aarch'>/dev/null && echo -n "arm") && \
     pacman -Sy --noconfirm $PACKAGES && \
-    rm -rf /var/cache/pacman/pkg/* && \ 
+    rm -rf /var/cache/pacman/pkg/*
 
 CMD ["/usr/bin/bash"]
