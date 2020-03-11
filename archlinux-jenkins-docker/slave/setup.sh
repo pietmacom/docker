@@ -1,7 +1,7 @@
 #!/bin/bash -ex
 
 echo "Please make sure that keyrings are initialized correctly!"
-echi
+echo
 echo "ARM: pacman-key --init && pacman-key --populate archlinuxarm"
 echo "x86_64: pacman-key --init && pacman-key --populate archlinux"
 echo
