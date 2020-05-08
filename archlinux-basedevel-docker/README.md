@@ -9,7 +9,7 @@ Base build environment which handles copying of sources and build artifacts. It 
 
 Additional packages can be installed by modifying the package file in the root of this directory.
 
-Build for certain packagestates are possible
+Build for certain packagestates is possible
 
  $ make docker-image VERSION=20200101
  
