@@ -14,8 +14,9 @@ chown -R build:build /build
 cd /build
 
 # Don't fail the rest of this script
+# Full login for /dec/stdout be created: https://unix.stackexchange.com/questions/38538/bash-dev-stderr-permission-denied
 EXITCODE=0
-su - build -s /bin/sh -c "$( IFS=$' '; echo "$@" )" || EXITCODE=$?
+su -l - build -s /bin/sh -c "$( IFS=$' '; echo "$@" )" || EXITCODE=$?
 
 chown -R --reference=/src/. /build-target/*
 cp -Rf --preserve=mode,ownership,timestamps /build-target/* /src/
