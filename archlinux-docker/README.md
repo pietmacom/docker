@@ -54,3 +54,5 @@ For none Archlinux hosts the makefile provides a bootstrap method which creates 
  - arch-install-scripts
  - base-devel
  - devtools
+ - fakechroot
+  
