@@ -9,7 +9,7 @@ So far its testet on
  - aarch64
  - x86_64
 
-So the archlinux makes sense, some things are copied from the host system
+So that the archlinux makes sense, some things are copied from the host system
 
  - locale
  - timezone
