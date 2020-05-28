@@ -76,7 +76,6 @@ rootfs: prepare
 		--noscriptlet \
 		--hookdir $(PWD)/alpm-hooks/usr/share/libalpm/hooks/ \
 		 archlinux$(shell uname -m | grep -E 'arm|aarch'>/dev/null && echo -n "arm")-keyring pacman base
-	rm -rf $(TMPDIR)/var/cache/pacman/pkg/*
 	rm -rf alpm-hooks 
 	
 	cp --recursive --preserve=timestamps --force $(BUILDDIR)/* $(TMPDIR)/
