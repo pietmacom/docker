@@ -7,8 +7,8 @@ sed -i "s|#\s*MAKEFLAGS.*|MAKEFLAGS=\"-j$(nproc)\"|" /etc/makepkg.conf
 # Make stdout accessable to scripts
 chmod gou+rw /dev/pts/*
 
-
-# Copy all+hidden files
+# Copy all(+hidden) files
+# 	-T, --no-target-directory	treat DEST as a normal file
 cp -RT /src /build
 chown -R build:build /build
 
