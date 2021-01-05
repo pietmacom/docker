@@ -1,6 +1,6 @@
 FROM alpine
 
-RUN apk add docker-cli make arch-install-scripts tar
+RUN apk add docker-cli make arch-install-scripts tar fakeroot
 
 COPY . /work
 WORKDIR /work

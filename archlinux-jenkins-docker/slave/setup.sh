@@ -22,7 +22,6 @@ echo
 echo -n "Working Drive (like /dev/sda): "
 read WORKDRIVE
 
-
 # update basesystem
 pacman --noconfirm -Syu
 
@@ -192,6 +191,14 @@ openssl x509 -passin pass:"$PASSWORD" -req -days 365 -sha256 -in /media/base/var
 chmod -v 0400 /media/base/var/lib/docker/.ssh/ca-key.pem /media/base/var/lib/docker/.ssh/client-key.pem /media/base/var/lib/docker/.ssh/server-key.pem
 chmod -v 0444 /media/base/var/lib/docker/.ssh/ca.pem /media/base/var/lib/docker/.ssh/server-cert.pem /media/base/var/lib/docker/.ssh/client-cert.pem
 rm -v /media/base/var/lib/docker/.ssh/client.csr /media/base/var/lib/docker/.ssh/server.csr /media/base/var/lib/docker/.ssh/extfile.cnf /media/base/var/lib/docker/.ssh/extfile-client.cnf
+
+## Trustet Certificate Authorities for Docker registry access
+if [ -e "./ca"  ];
+then
+    # Extrac CA and trust
+    trust anchor ./ca/*
+    update-ca-trust
+fi
 
 # Create Drop-In to replace ExecStart
 mkdir -p /etc/systemd/system/docker.service.d
