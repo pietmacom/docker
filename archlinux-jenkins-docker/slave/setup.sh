@@ -150,6 +150,7 @@ echo "/dev/mapper/tmp /tmp ext4 rw,noexec,nosuid,nodev 0 0" >> /etc/fstab
 echo "/dev/mapper/base-overlay /media/base-overlay ext4 defaults,noatime,nodiratime 0 0" >> /etc/fstab
 echo "/media/data/var/lib/jenkins /var/lib/jenkins none bind,noauto" >> /etc/fstab
 echo "/media/base-overlay/docker /var/lib/docker none bind,noauto" >> /etc/fstab
+echo "/media/base-overlay/containerd /var/lib/containerd none bind,noauto" >> /etc/fstab
 
 
 ## prepare base
@@ -219,7 +220,7 @@ function overlay-service() {
 	# With overlayfs kernel module its impossible to run docker container as
 	# non-rootuser, when docker-home is settled on an overlayfs
 
-	echo "ExecStartPre=mkdir -p /media/base-overlay/work /media/base-overlay/upper /media/base-overlay/docker"
+	echo "ExecStartPre=mkdir -p /media/base-overlay/work /media/base-overlay/upper /media/base-overlay/docker /media/base-overlay/containerd"
 	echo "ExecStart=mount -t overlay overlay -olowerdir=/media/base,upperdir=/media/base-overlay/upper,workdir=/media/base-overlay/work /media/data"
 	echo "ExecStartPost=/usr/bin/sh -c \"grep 'noauto' /etc/fstab | cut -d' ' -f2 | xargs -L 1 mount\""
 	echo "[Install]"
