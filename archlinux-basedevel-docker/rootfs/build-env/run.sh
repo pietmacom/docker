@@ -8,7 +8,8 @@ sed -i "s|#\s*MAKEFLAGS.*|MAKEFLAGS=\"-j$(nproc)\"|" /etc/makepkg.conf
 chmod gou+rw /dev/pts/*
 
 
-cp -R /src/* /build/
+# Copy all+hidden files
+cp -RT /src /build
 chown -R build:build /build
 
 cd /build
