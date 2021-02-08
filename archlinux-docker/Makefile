@@ -79,7 +79,6 @@ rootfs: prepare
 	rm -rf alpm-hooks 
 	
 	cp -T --recursive --preserve=timestamps --force $(BUILDDIR) $(TMPDIR)
-	echo $(VERSION) > $(TMPDIR)/VERSION
 	 
 	# remove passwordless login for root (see CVE-2019-5021 for reference)
 	sed -i -e 's/^root::/root:!:/' "$(TMPDIR)/etc/shadow"

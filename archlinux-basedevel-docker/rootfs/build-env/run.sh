@@ -1,5 +1,11 @@
 #!/bin/sh -ex
 
+# Upgrade Latest Version
+if [ "$VERSION" == "latest"  ];
+then
+    pacman -Syu --noconfirm
+fi
+
 # Prepare System
 sed -i "s|COMPRESSXZ.*|COMPRESSXZ=(xz -c -z - --threads=$(nproc))|" /etc/makepkg.conf
 sed -i "s|COMPRESSZST.*|COMPRESSZST=(zstd -c -z -q  -T $(nproc) -)|" /etc/makepkg.conf

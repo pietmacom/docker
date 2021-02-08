@@ -4,14 +4,15 @@
 #chmod 777 pkg-cache
 #	-v $(pwd)/pkg-cache:/var/cache/pacman/pkg:rw \
 
-TAG=$(uname -m)/archlinux-basedevel
-if [ ! -z $VERSION ];
+if [ -z $VERSION ];
 then
-    TAG=${TAG}:$VERSION
+    VERSION="latest"
 fi
 
+TAG=$(uname -m)/archlinux-basedevel:$VERSION
 docker run \
 	-t \
+	-e VERSION="$VERSION"
 	-v $(pwd):/src:rw \
 	$TAG \
 	"$@"
