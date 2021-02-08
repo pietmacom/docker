@@ -78,7 +78,8 @@ rootfs: prepare
 		 archlinux$(shell uname -m | grep -E 'arm|aarch'>/dev/null && echo -n "arm")-keyring pacman base
 	rm -rf alpm-hooks 
 	
-	cp --recursive --preserve=timestamps --force $(BUILDDIR)/* $(TMPDIR)/
+	cp -T --recursive --preserve=timestamps --force $(BUILDDIR) $(TMPDIR)
+	echo $(VERSION) > $(TMPDIR)/VERSION
 	 
 	# remove passwordless login for root (see CVE-2019-5021 for reference)
 	sed -i -e 's/^root::/root:!:/' "$(TMPDIR)/etc/shadow"
