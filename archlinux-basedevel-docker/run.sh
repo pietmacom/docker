@@ -12,7 +12,7 @@ fi
 TAG=$(uname -m)/archlinux-basedevel:$VERSION
 docker run \
 	-t \
-	-e VERSION="$VERSION"
+	-e VERSION="$VERSION" \
 	-v $(pwd):/src:rw \
 	$TAG \
 	"$@"

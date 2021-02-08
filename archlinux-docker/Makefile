@@ -31,7 +31,7 @@ endif
 prepare:
 	rm -rf $(BUILDDIR)
 	mkdir -vp $(BUILDDIR)
-	cp -rf rootfs/* $(BUILDDIR)
+	cp -rfT rootfs $(BUILDDIR)
 	
 	# Take what you can get for the new boostrapped system. Don't stop if not found!
 	cp -f /etc/pacman.d/mirrorlist $(PWD)/$(BUILDDIR)/etc/pacman.d/ || true
