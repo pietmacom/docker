@@ -34,6 +34,7 @@ prepare:
 	cp -rfT rootfs $(BUILDDIR)
 	
 	# Take what you can get for the new boostrapped system. Don't stop if not found!
+	mkdir -p $(PWD)/$(BUILDDIR)/etc/pacman.d
 	cp -f /etc/pacman.d/mirrorlist $(PWD)/$(BUILDDIR)/etc/pacman.d/ || true
 	cp -f /etc/locale.conf $(PWD)/$(BUILDDIR)/etc/ || true
 	cp -f /etc/locale.gen $(PWD)/$(BUILDDIR)/etc/ || true
