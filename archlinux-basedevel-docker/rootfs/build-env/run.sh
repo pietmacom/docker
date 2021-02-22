@@ -8,7 +8,7 @@ fi
 
 # Prepare System
 sed -i "s|COMPRESSXZ.*|COMPRESSXZ=(xz -c -z --threads=$(nproc) -)|" /etc/makepkg.conf
-sed -i "s|COMPRESSZST.*|COMPRESSZST=(zstd -c -z -q -T $(nproc) -)|" /etc/makepkg.conf
+sed -i "s|COMPRESSZST.*|COMPRESSZST=(zstd -c -z -q -T$(nproc) -)|" /etc/makepkg.conf
 sed -i "s|#\s*MAKEFLAGS.*|MAKEFLAGS=\"-j$(nproc)\"|" /etc/makepkg.conf
 
 # Make stdout accessable to scripts
