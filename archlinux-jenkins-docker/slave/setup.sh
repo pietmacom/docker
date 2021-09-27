@@ -138,9 +138,9 @@ mkdir -p /media/base-overlay
 mkdir -p /media/data
 
 ## crypttab
-echo "swap $(find -L /dev/disk/by-id -samefile ${WORKDRIVE}2 | head -n 1) /dev/urandom swap,cipher=aes-cbc-essiv:sha256,size=256" >> /etc/crypttab
-echo "tmp $(find -L /dev/disk/by-id -samefile ${WORKDRIVE}3 | head -n 1) /dev/urandom tmp,cipher=aes-cbc-essiv:sha256,size=256" >> /etc/crypttab
-echo "base-overlay $(find -L /dev/disk/by-id -samefile ${WORKDRIVE}4 | head -n 1) /dev/urandom tmp,cipher=aes-cbc-essiv:sha256,size=256" >> /etc/crypttab
+echo "swap $(find -L /dev/disk/by-id -samefile ${WORKDRIVE}2 | head -n 1) /dev/urandom swap,cipher=aes-cbc-essiv:sha256,size=256,no-read-workqueue,no-write-workqueue" >> /etc/crypttab
+echo "tmp $(find -L /dev/disk/by-id -samefile ${WORKDRIVE}3 | head -n 1) /dev/urandom tmp,cipher=aes-cbc-essiv:sha256,size=256,no-read-workqueue,no-write-workqueue" >> /etc/crypttab
+echo "base-overlay $(find -L /dev/disk/by-id -samefile ${WORKDRIVE}4 | head -n 1) /dev/urandom tmp,cipher=aes-cbc-essiv:sha256,size=256,no-read-workqueue,no-write-workqueue" >> /etc/crypttab
 
 
 ## fstab
