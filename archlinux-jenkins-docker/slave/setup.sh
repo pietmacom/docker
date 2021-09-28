@@ -146,8 +146,8 @@ echo "base-overlay $(find -L /dev/disk/by-id -samefile ${WORKDRIVE}4 | head -n 1
 ## fstab
 echo "$(find -L /dev/disk/by-id -samefile ${WORKDRIVE}1 | head -n 1) /media/base ext4 ro 0 2" >> /etc/fstab
 echo "/dev/mapper/swap none swap defaults 0 0" >> /etc/fstab
-echo "/dev/mapper/tmp /tmp ext4 rw,noexec,nosuid,nodev,discard 0 0" >> /etc/fstab
-echo "/dev/mapper/base-overlay /media/base-overlay ext4 defaults,noatime,nodiratime,discard 0 0" >> /etc/fstab
+echo "/dev/mapper/tmp /tmp ext4 rw,noinit_itable,noexec,nosuid,nodev,discard 0 0" >> /etc/fstab
+echo "/dev/mapper/base-overlay /media/base-overlay ext4 rw,noinit_itable,noatime,nodiratime,discard 0 0" >> /etc/fstab
 echo "/media/data/var/lib/jenkins /var/lib/jenkins none bind,noauto" >> /etc/fstab
 echo "/media/base-overlay/docker /var/lib/docker none bind,noauto" >> /etc/fstab
 echo "/media/base-overlay/containerd /var/lib/containerd none bind,noauto" >> /etc/fstab
