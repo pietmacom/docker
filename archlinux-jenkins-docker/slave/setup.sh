@@ -25,6 +25,7 @@ read WORKDRIVE
 # update basesystem
 pacman --noconfirm -Syu
 
+## timedatectl set-timezone "$(curl --fail https://ipapi.co/timezone)"
 ## set to german
 echo LANG=de_DE.UTF-8 > /etc/locale.conf
 echo KEYMAP=de-latin1-nodeadkeys > /etc/vconsole.conf
