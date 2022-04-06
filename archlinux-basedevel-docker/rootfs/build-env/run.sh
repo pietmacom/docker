@@ -3,7 +3,13 @@
 # Upgrade Latest Version
 if [ "$VERSION" == "latest"  ];
 then
-    pacman -Syu --noconfirm
+    pacman --noconfirm -Sy
+    pacman --noconfirm -S archlinux-keyring
+    if uname -m | grep -qE 'arm|aarch' ;
+    then
+        pacman --noconfirm -S archlinuxarm-keyring
+    fi
+    pacman --noconfirm -Su
 fi
 
 # Prepare System
