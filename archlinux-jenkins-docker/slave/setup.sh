@@ -79,7 +79,7 @@ systemctl disable man-db || true
 systemctl disable shadow || true
 systemctl disable systemd-random-seed || true
 systemctl disable etckeeper.timer
-/bin/sh -c 'cd /etc && git add -A && git commit -m "disable services in Read only Filesystem"'
+/bin/sh -c 'cd /etc && git add -A && git commit -m "disable services in read only filesystem"'
 
 # Raspberry pi
 if [ -e "/boot/cmdline.txt" ]; then sed -i 's| rw | ro |' /boot/cmdline.txt; fi
