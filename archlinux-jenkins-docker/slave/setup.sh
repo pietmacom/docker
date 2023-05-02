@@ -22,6 +22,10 @@ echo
 echo -n "Working Drive (like /dev/sda): "
 read WORKDRIVE
 
+# initialize system
+pacman-key --init
+pacman-key --populate archlinuxarm
+
 # update basesystem
 pacman --noconfirm -Syu
 
