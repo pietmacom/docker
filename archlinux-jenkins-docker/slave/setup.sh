@@ -25,6 +25,9 @@ read WORKDRIVE
 # update basesystem
 pacman --noconfirm -Syu
 
+pacman -S git
+/bin/sh -c 'cd /etc && git init && git config --global user.email "you@example.com" && git config --global user.name "Your Name" && git add -A  && git commit -a -m "init after system upgrade"'
+
 ## timedatectl set-timezone "$(curl --fail https://ipapi.co/timezone)"
 ## set to german
 echo LANG=de_DE.UTF-8 > /etc/locale.conf
@@ -37,28 +40,27 @@ sed -i 's|^#\(de_CH.UTF-8.*\)$|\1|' /etc/locale.gen
 sed -i 's|^#\(de_AT.UTF-8.*\)$|\1|' /etc/locale.gen
 sed -i 's|^#\(en_DK.UTF-8.*\)$|\1|' /etc/locale.gen
 locale-gen
+/bin/sh -c 'cd /etc && git add -A && git commit -m "set timezone"'
 
 ## maintenance/tracing
-pacman --noconfirm -S git etckeeper
-cd /etc && git init && git config --global user.email "you@example.com" && git config --global user.name "Your Name" && git add -A  && git commit -a -m "init"
-systemctl enable etckeeper.timer
-
-pacman --noconfirm  -S mc bash-completion iotop iftop
+pacman --noconfirm  -S etckeeper mc bash-completion iotop iftop
+/bin/sh -c 'cd /etc && git add -A && git commit -m "install system utils"'
 
 ########################################################
-# buildsystem
+# BASESYSTEN
+#
 echo "${HOSTNAME}" > /etc/hostname
+/bin/sh -c 'cd /etc && git add -A && git commit -m "set hostname"'
 
 ## password
 (echo "$PASSWORD" ; echo "$PASSWORD") | passwd alarm
 (echo "$PASSWORD" ; echo "$PASSWORD") | passwd root
-
-## Read Only
-systemctl disable etckeeper.timer
+/bin/sh -c 'cd /etc && git add -A && git commit -m "set user passwords for alarm and root"'
 
 # has to happen first - most top
 echo "tmpfs /var/tmp tmpfs nodev,nosuid 0 0" >> /etc/fstab
 echo "tmpfs /var/log tmpfs nodev,nosuid 0 0" >> /etc/fstab
+/bin/sh -c 'cd /etc && git add -A && git commit -m "add tmpfs to /var/tmp and /var/log"'
 
 if [ -e "/etc/resolvconf.conf" ];
 then
@@ -67,6 +69,7 @@ else
 	echo 'resolv_conf=/var/tmp/resolv.conf' > /etc/resolvconf.conf
 fi
 sed -i 's|#Storage=auto|Storage=volatile|' /etc/systemd/journald.conf
+/bin/sh -c 'cd /etc && git add -A && git commit -m "prepare systemd for readonly filesystem"'
 
 systemctl mask logrotate.timer
 systemctl mask man-db.timer
@@ -76,6 +79,7 @@ systemctl disable man-db || true
 systemctl disable shadow || true
 systemctl disable systemd-random-seed || true
 systemctl disable etckeeper.timer
+/bin/sh -c 'cd /etc && git add -A && git commit -m "disable services in Read only Filesystem"'
 
 # Raspberry pi
 if [ -e "/boot/cmdline.txt" ]; then sed -i 's| rw | ro |' /boot/cmdline.txt; fi
@@ -95,6 +99,12 @@ echo "mount -o remount,rw /" > ~/writeenable.sh
 echo "mount -o remount,ro /" > ~/readonly.sh
 chmod 500 ~/writeenable.sh
 chmod 500 ~/readonly.sh
+
+
+
+########################################################
+# Devel System
+#
 
 ## Base-Devtools
 pacman --noconfirm -S arch-install-scripts base-devel devtools
