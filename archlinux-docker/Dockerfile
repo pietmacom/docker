@@ -1,18 +1,12 @@
 FROM scratch
 ADD archlinux.tar /
-ARG PACKAGES 
 
+# remove passwordless login for root (see CVE-2019-5021 for reference)
+RUN sed -i -e 's/^root::/root:!:/' /etc/shadow
 
-# manually run all alpm hooks that can't be run inside the fakechroot
-# initialize the archilnux keyring, but discard any private key that may be shipped.
-RUN ldconfig && \
-    update-ca-trust && \
-    sh -c 'ls usr/lib/sysusers.d/*.conf | /usr/share/libalpm/scripts/systemd-hook sysusers ' || true && \
-    rm -rf /etc/pacman.d/gnupg/{openpgp-revocs.d/,private-keys-v1.d/,pugring.gpg~,gnupg.S.}* && \
-    pacman-key --init && \
-    pacman-key --populate archlinux$(uname -m | grep -E 'arm|aarch'>/dev/null && echo -n "arm") && \
-    pacman -Sy --noconfirm $PACKAGES && \
-    rm -rf /var/cache/pacman/pkg/* && \
-    locale-gen
+RUN pacman-key --init && \
+    pacman-key --populate archlinux$(uname -m | grep -E 'arm|aarch'>/dev/null && echo -n "arm")
+
+ENV LANG=C.UTF-8
 
 CMD ["/usr/bin/bash"]
